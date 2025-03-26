@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "catsbreeds_app",
+    "slug": "snack-284ae86f-6416-4488-bf6b-ab0aec2a065b",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/cat.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "739c02cf-aa8e-48d1-8589-22918975b0a3"
+      }
+    }
+  }
+}
