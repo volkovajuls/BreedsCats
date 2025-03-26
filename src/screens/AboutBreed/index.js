@@ -8,16 +8,12 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
 import { loadRandomImage } from '../../api/breeds';
 import { saveImageInFavorites, loadFavorites } from '../../api/favorites';
 
 export default function App({ navigation, route }) {
   const catBreed = route.params?.breed;
-
-  // console.log('catBreed name  ', catBreed?.name);
 
   const [imageUrl, setImageUrl] = useState('');
   const [nameBreed, setNameBreed] = useState('');

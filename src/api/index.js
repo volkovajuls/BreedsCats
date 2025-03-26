@@ -12,12 +12,6 @@ export const getRequest = async (url, config) => {
   try {
     return instance.get(url, config);
   } catch (err) {
-    // console.error(`error:, ${err}`);
-    // if (err.response) {
-    //   console.log(err.response.data);
-    //   console.log(err.response.status);
-    //   console.log(err.response.headers);
-    // }
     logError(err);
   }
 };
