@@ -23,7 +23,6 @@ export default function Favorites() {
 
   return (
     <View style={styles.container}>
-      <Text>Favorites</Text>
       <FlatList data={favorites} renderItem={renderItem} />
     </View>
   );
