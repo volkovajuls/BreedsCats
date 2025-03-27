@@ -1,72 +1,29 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import {
-  Text,
-  Image,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import axios from 'axios';
+import React from "react";
+import { useEffect, useState } from "react";
+import { Text, View, StyleSheet, FlatList } from "react-native";
 
-import {loadFavorites } from '../../api/favorites';
+import { loadFavoritesApi } from "../../api/favorites";
+import CatFavorites from "./component/CatFavorites";
 
-
-axios.defaults.baseURL = 'https://api.thecatapi.com/v1/';
-axios.defaults.headers.common['x-api-key'] =
-  'live_jiHKfaFn1XSRWlorH2WxwnmltLB5laAsQQjPFV03bAhTON0WczTTFBTufoYIQE0Q';
-
-export default function App() {
+export default function Favorites() {
   const [favorites, setFavorites] = useState();
 
-  const loadImageInFavorites = async (imageId) => {
-    const url = 'favorites';
-
-    try {
-      const response = await axios.get(url, { image_id: imageId });
-      if (response?.data) {
-        setFavorites(response?.data);
-      }
-    } catch (error) {
-      console.log('load', error);
-    }
-  };
-
-  const deleteImageFromFavorites = async (favoritesId) => {
-    const url = `favorites/${favoritesId}`;
-    console.log('url', url);
-    try {
-      const response = await axios.delete(url);
-      console.log('response Delete', response);
-    } catch (error) {
-      console.log('delete', error);
-    }
+  const loadImageInFavorites = async () => {
+    // const url = 'favorites';
+    const loadFavorites = await loadFavoritesApi();
+    // const response = await loadImageInFavoritesApi(imageId);
+    setFavorites(loadFavorites);
   };
 
   useEffect(() => {
     loadImageInFavorites();
-  }, []);
-
-  function CatFavorites({ favorite }) {
-    return (
-      <View style={styles.button}>
-        <View>
-          <Image style={styles.image} source={{ uri: favorite?.image?.url }} />
-           <TouchableOpacity
-          style={styles.closeContainer}
-          onPress={() => deleteImageFromFavorites(favorite?.id)}>
-          <Image style={styles.close} source={require('./close.png')} />
-        </TouchableOpacity>
-        </View>
-      </View>
-    );
-  }
+  }, [favorites]);
 
   const renderItem = ({ item }) => <CatFavorites favorite={item} />;
 
   return (
     <View style={styles.container}>
+      <Text>Favorites</Text>
       <FlatList data={favorites} renderItem={renderItem} />
     </View>
   );
@@ -74,32 +31,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF8F8',
+    backgroundColor: "#FFF8F8",
     flex: 1,
     paddingHorizontal: 20,
     paddingTop: 37,
-  },
-  image: {
-    width: 200,
-    height: 200,
-    // aspectRatio: 1,
-    borderRadius: 16,
-  },
-
-  button: {
-    borderRadius: 12,
-    marginTop: 15,
-    alignItems: 'center',
-  },
-
-  closeContainer: {
-    position: 'absolute',
-    top: 2,
-    right: 3,
-    zIndex: 10,
-  },
-  close: {
-    width: 30,
-    height: 30,
   },
 });
