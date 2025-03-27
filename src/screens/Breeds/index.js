@@ -10,7 +10,7 @@ import 'react-native-gesture-handler';
 import { dataBreeds } from '../../api/breeds';
 import CatBreed from './component/CatBreed'
 
-export default function App({ navigation }) {
+export default function Breeds({ navigation }) {
   const [breeds, setBreeds] = useState();
 
   const loadDataBreeds = async () => {
@@ -25,7 +25,6 @@ export default function App({ navigation }) {
 
   const OnClickCat = (breed) => {
     navigation.navigate('AboutBreed', {breed});
-    console.log('OnClickCat',{breed});
   };
   const RenderItem = ({ item }) => (
     <CatBreed breed={item} onPress={OnClickCat} />

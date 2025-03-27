@@ -1,5 +1,5 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React from "react";
+import { useEffect, useState } from "react";
 import {
   Text,
   Image,
@@ -7,18 +7,19 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-} from 'react-native';
+} from "react-native";
 
-import { loadRandomImage } from '../../api/breeds';
-import { saveImageInFavorites, loadFavorites } from '../../api/favorites';
+import { loadRandomImage } from "../../api/breeds";
+import { saveImageInFavoritesApi, loadFavoritesApi } from "../../api/favorites";
 
-export default function App({ navigation, route }) {
+export default function AboutBreed({ navigation, route }) {
   const catBreed = route.params?.breed;
-
-  const [imageUrl, setImageUrl] = useState('');
-  const [nameBreed, setNameBreed] = useState('');
-  const [descriptionBreed, setDescriptionBreed] = useState('');
-  const [imageId, setImageId] = useState();
+  const [imageUrl, setImageUrl] = useState(catBreed.url);
+  const [nameBreed, setNameBreed] = useState(catBreed.name);
+  const [descriptionBreed, setDescriptionBreed] = useState(
+    catBreed.description
+  );
+  const [imageId, setImageId] = useState(catBreed.id);
 
   const loadImage = async () => {
     const dataCat = await loadRandomImage(catBreed.id);
@@ -30,7 +31,7 @@ export default function App({ navigation, route }) {
 
   useEffect(() => {
     loadImage();
-    //loadFavorites();
+    // loadFavoritesApi();
   }, []);
 
   return (
@@ -39,20 +40,19 @@ export default function App({ navigation, route }) {
         <View style={styles.circle}>
           <Image
             style={styles.imageIcon}
-            source={require('../../assets/Icon.png')}
+            source={require("../../assets/Icon.png")}
           />
         </View>
       </TouchableOpacity>
-
-      <View style={styles.bodyContainer}>
-        <View style={[styles.image, styles.shadow]}>
-          <Image style={styles.image} source={{ uri: imageUrl }} />
-        </View>
-        <Text style={styles.text}>{nameBreed} </Text>
-        <ScrollView>
+      <ScrollView>
+        <View style={styles.bodyContainer}>
+          <View style={[styles.image, styles.shadow]}>
+            <Image style={styles.image} source={{ uri: imageUrl }} />
+          </View>
+          <Text style={styles.text}>{nameBreed} </Text>
           <Text style={styles.description}>{descriptionBreed}</Text>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => loadImage()}>
@@ -61,7 +61,8 @@ export default function App({ navigation, route }) {
         <TouchableOpacity style={styles.button}>
           <Text
             style={styles.buttonText}
-            onPress={() => saveImageInFavorites(imageId)}>
+            onPress={() => saveImageInFavoritesApi(imageId)}
+          >
             Добавить в избранное
           </Text>
         </TouchableOpacity>
@@ -72,7 +73,7 @@ export default function App({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF8F8',
+    backgroundColor: "#FFF8F8",
     flex: 1,
     paddingHorizontal: 20,
     paddingTop: 37,
@@ -80,40 +81,40 @@ const styles = StyleSheet.create({
   bodyContainer: { marginTop: 29 },
 
   image: {
-    width: '100%',
-    height: 'auto',
+    width: "100%",
+    height: "auto",
     aspectRatio: 1,
     borderRadius: 16,
   },
   text: {
     fontSize: 20,
-    fontWeight: '700',
+    fontWeight: "700",
     marginTop: 42,
   },
   description: {
     fontSize: 14,
-    fontWeight: '400',
+    fontWeight: "400",
     marginTop: 31,
   },
   buttonText: {
-    color: '#5533EA',
-    fontWeight: '600',
+    color: "#5533EA",
+    fontWeight: "600",
     fontSize: 14,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 50,
   },
   button: {
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     marginTop: 43,
   },
   shadow: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 11,
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     //marginLeft: 24,
   },
 });
