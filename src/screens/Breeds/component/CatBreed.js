@@ -1,12 +1,10 @@
   import React from 'react';
-import { useEffect, useState } from 'react';
 import {
   Text,
   Image,
   View,
   StyleSheet,
   TouchableOpacity,
-  FlatList,
 } from 'react-native';
 
 export default function CatBreed({ breed, onPress}) {
