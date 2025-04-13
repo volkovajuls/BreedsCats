@@ -1,25 +1,46 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Text, View, StyleSheet, FlatList } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
-import { loadFavoritesApi } from "../../api/favorites";
+import { loadFavoritesApi, loadImageInFavoritesApi } from "../../api/favorites";
 import CatFavorites from "./component/CatFavorites";
 
-export default function Favorites() {
-  const [favorites, setFavorites] = useState();
+export default function Favorites({ navigation }) {
+  const [favorites, setFavorites] = useState([]);
+  // const [prevFavorites, setPrevFavorites] = useState(favorites);
 
   const loadImageInFavorites = async () => {
-    // const url = 'favorites';
     const loadFavorites = await loadFavoritesApi();
-    // const response = await loadImageInFavoritesApi(imageId);
     setFavorites(loadFavorites);
   };
 
-  useEffect(() => {
-    loadImageInFavorites();
-  }, [favorites]);
+  // useEffect(() => {
+  //   loadImageInFavorites();
+  // }, []);
 
-  const renderItem = ({ item }) => <CatFavorites favorite={item} />;
+  // useEffect(() => {});
+
+   useFocusEffect(
+     React.useCallback(() => {
+       // Do something when the screen is focused
+       loadImageInFavorites();
+       console.log("focused");
+       return () => {
+         console.log("unfocused");
+         // Do something when the screen is unfocused
+         // Useful for cleanup functions
+       };
+     }, [])
+  );
+  
+  const renderItem = ({ item }) => (
+    <CatFavorites
+      favorite={item}
+      setFavorites={setFavorites}
+      favorites={favorites}
+    />
+  );
 
   return (
     <View style={styles.container}>
