@@ -1,5 +1,5 @@
 export const ApiUrls = {
   breeds: "/breeds",
-  favorites: "/favorites",
+  favorites: "/favourites",
   imageSearch: "/images/search"
 } 
