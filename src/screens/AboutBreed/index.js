@@ -1,5 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import * as Haptics from "expo-haptics";
+
 import {
   Text,
   Image,
@@ -10,7 +12,11 @@ import {
 } from "react-native";
 
 import { loadRandomImage } from "../../api/breeds";
-import { saveImageInFavoritesApi, loadFavoritesApi } from "../../api/favorites";
+import {
+  saveImageInFavoritesApi,
+  loadFavoritesApi,
+  loadImageInFavoritesApi,
+} from "../../api/favorites";
 
 export default function AboutBreed({ navigation, route }) {
   const catBreed = route.params?.breed;
@@ -34,6 +40,15 @@ export default function AboutBreed({ navigation, route }) {
     // loadFavoritesApi();
   }, []);
 
+  const saveImageFavorites = (imageId) => {
+    const isSuccess = saveImageInFavoritesApi(imageId);
+    if (isSuccess) {
+      console.log("Ответ успешен!Save");
+    } else {
+      console.log("Ответ не успешен.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -55,13 +70,24 @@ export default function AboutBreed({ navigation, route }) {
       </ScrollView>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => loadImage()}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            Haptics.selectionAsync();
+            loadImage();
+          }}
+        >
           <Text style={styles.buttonText}>Другое фото</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <Text
             style={styles.buttonText}
-            onPress={() => saveImageInFavoritesApi(imageId)}
+            onPress={() => {
+              Haptics.notificationAsync(
+                Haptics.NotificationFeedbackType.Success
+              );
+              saveImageFavorites(imageId);
+            }}
           >
             Добавить в избранное
           </Text>
