@@ -8,20 +8,32 @@ import {
 
 import { deleteImageFromFavoritesApi } from '../../../api/favorites';
 
-export default function CatFavorites({ favorite }) {
-    return (
-      <View style={styles.button}>
-        <View>
-          <Image style={styles.image} source={{ uri: favorite?.image?.url }} />
-           <TouchableOpacity
+export default function CatFavorites({ favorite, setFavorites, favorites }) {
+  return (
+    <View style={styles.button}>
+      <View>
+        <Image style={styles.image} source={{ uri: favorite?.image?.url }} />
+        <TouchableOpacity
           style={styles.closeContainer}
-          onPress={() => deleteImageFromFavoritesApi(favorite?.id)}>
-          <Image style={styles.close} source={require('../../../assets/close.png')} />
+          onPress={() => {
+            const isSuccess = deleteImageFromFavoritesApi(favorite?.id);
+            if (isSuccess) {
+              setFavorites(favorites.filter((f) => f.id !== favorite?.id));
+            } else {
+              console.log("Ответ не успешен.");
+            }
+            
+          }}
+        >
+          <Image
+            style={styles.close}
+            source={require("../../../assets/close.png")}
+          />
         </TouchableOpacity>
-        </View>
       </View>
-    );
-  }
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
