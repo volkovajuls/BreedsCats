@@ -2,7 +2,7 @@ import { getRequest } from './index';
 import { ApiUrls } from './urls';
 
 export const loadBreeds = async () => {
-  const url = ApiUrls.breeds;
+  const url = `${ApiUrls.breeds}`;
 };
 
 export const dataBreeds = async () => {
@@ -20,9 +20,8 @@ export const dataBreeds = async () => {
 };
 
 export const loadRandomImage = async (breedId) => {
-console.log("breedId ",breedId)
+// console.log("breedId ",breedId)
 const url = `${ApiUrls.imageSearch}?breed_id=${breedId}&has_breeds=true`;
-console.log("url  ",url)
   try {
     const response = await getRequest(url);
     const dataCat = response.data[0];
