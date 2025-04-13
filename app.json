@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.volkjuls.snack284ae86f64164488bf6bab0aec2a065b"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -28,6 +29,20 @@
       "eas": {
         "projectId": "739c02cf-aa8e-48d1-8589-22918975b0a3"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#232323",
+          "image": "./assets/splash-icon_.png",
+          "dark": {
+            "image": "./assets/splash-icon-dark.png",
+            "backgroundColor": "#000000"
+          },
+          "imageWidth": 200
+        }
+      ]
+    ]
   }
 }
